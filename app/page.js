@@ -8,36 +8,22 @@ export default function Home()
 {
 
   const [ data, setData ] = useState(null);
-  const [ transactions, setTransactions ] = useState(null);
+  const [ courses, setCourses ] = useState(null);
   const [ loading, setLoading ] = useState(true);
 
-	// useEffect(()=>
-	// {
-  //   getTransactions();
+	useEffect(()=>
+	{
+    getTransactions();
 		
-	// },[])
+	},[])
 
   const getTransactions = async () =>
   {
     try
     {
-      const url = '/api/transactions'
+      const url = '/api/course'
       const response = await axios.get(url);
-      const sortedTransactions = response.data.sort((a,b)=> new Date(b.date) - new Date(a.date)).slice(0,4);
-      setTransactions(sortedTransactions);
-
-      const pieData = [];
-		  response.data.forEach((transaction)=>
-    	{
-        	const type = transaction.type;
-        	const existingType = pieData.find((record) => record.Type === type);
-        	if(existingType)
-           		existingType.Count += 1;
-        	else
-            	pieData.push({ Type: type, Count: 1})
-    	});
-		  setData(pieData);
-      
+      setCourses(response.data)
     }
     catch(error)
     {
@@ -49,7 +35,7 @@ export default function Home()
     }
   }
 
-  console.log(transactions)
+  console.log(courses)
 
   if(loading)
     return
@@ -78,24 +64,12 @@ export default function Home()
         {data && <div className="grid gap-4">
       </div>}
 
-        <div className="grid gap-4 bg-opacity-50 backdrop-blur-md shadow-lg rounded-xl p-6 border border-gray-300">
-          <h2 className="text-xl font-bold text-center">Recent Transactions</h2>
-          {/* <div className="grid gap-4">
-            {transactions.map((transaction)=>
-            (
-              <Link href="/transactions" key={transaction._id} className='h-18 flex justify-between gap-1 cursor-pointer'>
-                <div className="flex flex-col ">
-                  <p>{transaction.primaryAccount.accountName}</p>
-                  <p className="text-gray-400 text-sm">{transaction.description}</p>
-                </div>
-                <div>
-                    <p className="text-end">${transaction.amount}</p>
-                    <p className="text-gray-400 text-sm text-end">{transaction.type}</p>
-                  </div>
-              </Link>
-            ))}
-          </div> */}
-        </div>
+      <div className="flex flex-wrap gap-4">
+        {courses.map((course)=>
+        (
+          <p key={course._id} className="font-bold text-xl">{course.title}</p>
+        ))}
+      </div>
         
       </div>
       
