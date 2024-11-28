@@ -11,11 +11,11 @@ export default function Home()
   const [ transactions, setTransactions ] = useState(null);
   const [ loading, setLoading ] = useState(true);
 
-	useEffect(()=>
-	{
-    getTransactions();
+	// useEffect(()=>
+	// {
+  //   getTransactions();
 		
-	},[])
+	// },[])
 
   const getTransactions = async () =>
   {
@@ -80,7 +80,7 @@ export default function Home()
 
         <div className="grid gap-4 bg-opacity-50 backdrop-blur-md shadow-lg rounded-xl p-6 border border-gray-300">
           <h2 className="text-xl font-bold text-center">Recent Transactions</h2>
-          <div className="grid gap-4">
+          {/* <div className="grid gap-4">
             {transactions.map((transaction)=>
             (
               <Link href="/transactions" key={transaction._id} className='h-18 flex justify-between gap-1 cursor-pointer'>
@@ -94,7 +94,7 @@ export default function Home()
                   </div>
               </Link>
             ))}
-          </div>
+          </div> */}
         </div>
         
       </div>
